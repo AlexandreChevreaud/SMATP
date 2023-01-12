@@ -23,7 +23,7 @@ class Body:
         self.dateNaissance = datetime.datetime.now()
         self.esperanceDeVie = 100
 
-        self.fustrum = Fustrum(300, self)
+        self.fustrum = Fustrum(50, self)
 
         self.status = 'N'
 

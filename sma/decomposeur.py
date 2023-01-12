@@ -1,3 +1,5 @@
+from pygame import Vector2
+
 from sma.agent import Agent
 
 
@@ -24,5 +26,6 @@ class Decomposeur(Agent):
         targets = self.filtrePerception()
         if len(targets) > 0:
             target = targets[0].position - self.body.position
-            target.scale_to_length(target.length())
+            if(target.length is not Vector2(0,0)):
+                target.scale_to_length(target.length())
             self.body.acceleration = self.body.acceleration + target
