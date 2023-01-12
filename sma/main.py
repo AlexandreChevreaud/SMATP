@@ -1,3 +1,5 @@
+from collections import Counter
+
 import core
 from sma.bodyCarnivore import BodyCarnivore
 from sma.bodyDecomposeur import BodyDecomposeur
@@ -87,5 +89,13 @@ def run():
         applyDecision(agent)
 
     updateEnv()
+
+    # Compter le nombre d'agents ayant chaque statut
+    status_counts = Counter(agent.type for agent in agents)
+    print('-----------------------------------------------------------------')
+    for status, count in status_counts.items():
+
+        print("Il y a {} agents ayant un statut '{}' ce qui représente {}%".format(count, status,(count/len(agents))*100))
+    print('-----------------------------------------------------------------')
 
 core.main(setup, run)

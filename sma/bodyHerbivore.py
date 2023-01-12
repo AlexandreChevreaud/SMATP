@@ -20,6 +20,7 @@ class BodyHerbivore(Body):
         self.dateNaissance = 10
         self.esperanceDeVie = 100
 
+
     def show(self):
         core.Draw.circle((0,255,0), self.position, self.bodySize)
 

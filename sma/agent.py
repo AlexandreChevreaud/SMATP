@@ -5,6 +5,7 @@ class Agent(object):
     def __init__(self, body):
         self.body = body
         self.uuid = random.randint(100000, 999999999)
+        self.type = ""
 
     def show(self):
         self.body.show()

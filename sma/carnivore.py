@@ -6,6 +6,7 @@ from sma.bodyDecomposeur import BodyDecomposeur
 class Carnivore(Agent):
     def __init__(self, body):
         super().__init__(body)
+        self.type = "carnivore"
 
     def filtrePerception(self):
         decomposeurs =[]

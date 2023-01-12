@@ -6,6 +6,7 @@ class Superpredateur(Agent):
 
     def __init__(self, body):
         super().__init__(body)
+        self.type = "superpredateur"
 
     def filtrePerception(self):
         decomposeurs =[]
