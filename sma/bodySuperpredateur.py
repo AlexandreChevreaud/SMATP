@@ -11,7 +11,7 @@ class BodySuperpredateur(Body):
         super().__init__()
         self.jaugeFaim = Jauge(0, 80, 70)
         self.jaugeFatigue = Jauge(50, 100, 80)
-        self.jaugeReproduction = Jauge(0, 100, 0)
+        self.jaugeReproduction = Jauge(0, 100, 80)
 
         self.velocity = Vector2(2, 2)
         self.acceleration = Vector2(2, 2)

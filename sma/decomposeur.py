@@ -26,6 +26,6 @@ class Decomposeur(Agent):
         targets = self.filtrePerception()
         if len(targets) > 0:
             target = targets[0].position - self.body.position
-            if(target.length is not Vector2(0,0)):
+            if(target.length() != 0):
                 target.scale_to_length(target.length())
             self.body.acceleration = self.body.acceleration + target
