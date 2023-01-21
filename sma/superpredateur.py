@@ -1,5 +1,7 @@
-from sma.agent import Agent
-from sma.bodyDecomposeur import BodyDecomposeur
+from agent import Agent
+from bodyCarnivore import BodyCarnivore
+from bodyDecomposeur import BodyDecomposeur
+from bodyHerbivore import BodyHerbivore
 
 
 class Superpredateur(Agent):
@@ -9,20 +11,20 @@ class Superpredateur(Agent):
         self.type = "superpredateur"
 
     def filtrePerception(self):
-        decomposeurs =[]
+        manger  =[]
         for i in self.body.fustrum.perceptionList:
             i.dist = self.body.position.distance_to(i.position)
             if isinstance(i,BodyDecomposeur):
-                decomposeurs.append(i)
+                if (i.status == 'N'):
+                    manger.append(i)
+            if isinstance(i, BodyCarnivore):
+                if (i.status == 'N'):
+                    manger.append(i)
+            if isinstance(i, BodyHerbivore):
+                if (i.status == 'N'):
+                    manger.append(i)
 
 
-        decomposeurs.sort(key=lambda x: x.dist, reverse=False)
+        manger.sort(key=lambda x: x.dist, reverse=False)
 
-        return decomposeurs
-
-    def update(self):
-        targets = self.filtrePerception()
-        if len(targets) > 0:
-            target = targets[0].position - self.body.position
-            target.scale_to_length(target.length())
-            self.body.acceleration = self.body.acceleration + target
+        return manger, []

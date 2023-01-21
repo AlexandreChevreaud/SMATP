@@ -1,0 +1,123 @@
+{
+   "duréeSimu": 1000,
+   "SuperPredateur": {
+      "nb": 2,
+      "parametres": {
+         "vitesseMax": [
+            "2",
+            "4"
+         ],
+         "accelerationMax": [
+            "1",
+            "3"
+         ],
+         "MaxFaim": [
+            "150",
+            "300"
+         ],
+         "MaxFatique": [
+            "150",
+            "300"
+         ],
+         "MaxRepoduction": [
+            "100",
+            "150"
+         ],
+         "esperanceDeVie": [
+            "150",
+            "300"
+         ]
+      }
+   },
+   "Herbivore": {
+      "nb": 5,
+      "parametres": {
+         "vitesseMax": [
+            "2",
+            "4"
+         ],
+         "accelerationMax": [
+            "1",
+            "3"
+         ],
+         "MaxFaim": [
+            "150",
+            "300"
+         ],
+         "MaxFatique": [
+            "150",
+            "300"
+         ],
+         "MaxRepoduction": [
+            "150",
+            "300"
+         ],
+         "esperanceDeVie": [
+            "150",
+            "300"
+         ]
+      }
+   },
+   "Carnivore": {
+      "nb": 4,
+      "parametres": {
+         "vitesseMax": [
+            "2",
+            "4"
+         ],
+         "accelerationMax": [
+            "1",
+            "3"
+         ],
+         "MaxFaim": [
+            "150",
+            "300"
+         ],
+         "MaxFatique": [
+            "150",
+            "300"
+         ],
+         "MaxRepoduction": [
+            "150",
+            "300"
+         ],
+         "esperanceDeVie": [
+            "150",
+            "300"
+         ]
+      }
+   },
+   "Decomposeur": {
+      "nb": 15,
+      "parametres": {
+         "vitesseMax": [
+            "2",
+            "4"
+         ],
+         "accelerationMax": [
+            "1",
+            "3"
+         ],
+         "MaxFaim": [
+            "300",
+            "400"
+         ],
+         "MaxFatique": [
+            "300",
+            "400"
+         ],
+         "MaxRepoduction": [
+            "150",
+            "200"
+         ],
+         "esperanceDeVie": [
+            "300",
+            "400"
+         ]
+      }
+   },
+   "Vegetaux": {
+      "nb": 5
+   }
+
+}

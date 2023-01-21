@@ -1,3 +1,5 @@
+import random
+
 from pygame import Vector2
 
 import core
@@ -7,28 +9,21 @@ from superpredateur import Superpredateur
 
 
 class BodySuperpredateur(Body):
-    def __init__(self):
-        super().__init__()
-        self.jaugeFaim = Jauge(0, 80, 70)
-        self.jaugeFatigue = Jauge(50, 100, 80)
-        self.jaugeReproduction = Jauge(0, 100, 80)
+    def __init__(self,params):
+        super().__init__(params)
 
-        self.velocity = Vector2(2, 2)
-        self.acceleration = Vector2(2, 2)
-
-        self.maxSpeed = 50
-        self.maxAcc = 10
+        self.velocity = Vector2(random.randint(-self.maxSpeed,self.maxSpeed), random.randint(-self.maxSpeed,self.maxSpeed))
+        self.acceleration = Vector2(3, 3)
         self.dateNaissance = 10
-        self.esperanceDeVie = 100
+        self.velocityMemory = self.velocity
 
     def show(self):
         core.Draw.circle((255,0,0), self.position, self.bodySize)
 
     def update(self):
         super().update()
-
         if(self.jaugeReproduction.valeur >= self.jaugeReproduction.max and self.status is not 'M' and self.status is not 'D'):
             self.jaugeReproduction.valeur = self.jaugeReproduction.min
-            agent = Superpredateur(BodySuperpredateur())
+            agent = Superpredateur(BodySuperpredateur(self.params))
             agent.body.modificationParametrageNaissance(self.position)
             core.memory("agents").append(agent)

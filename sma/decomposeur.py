@@ -1,7 +1,5 @@
-from pygame import Vector2
-
-from sma.agent import Agent
-
+from agent import Agent
+from bodyHerbivore import BodyHerbivore
 
 
 class Decomposeur(Agent):
@@ -10,22 +8,18 @@ class Decomposeur(Agent):
         self.type = "decomposeur"
 
     def filtrePerception(self):
-        manger =[]
+        manger = []
+        danger = []
         for i in self.body.fustrum.perceptionList:
             i.dist = self.body.position.distance_to(i.position)
-            if hasattr(i, "dateNaissance"):
+            from bodyDecomposeur import BodyDecomposeur
+            if hasattr(i, "dateNaissance") and not isinstance(i,BodyDecomposeur):
                 if (i.status is 'M'):
                     manger.append(i)
+                elif not isinstance(i,BodyDecomposeur) and not isinstance(i,BodyHerbivore):
+                    danger.append(i)
 
 
         manger.sort(key=lambda x: x.dist, reverse=False)
-
-        return manger
-
-    def update(self):
-        targets = self.filtrePerception()
-        if len(targets) > 0:
-            target = targets[0].position - self.body.position
-            if(target.length() != 0):
-                target.scale_to_length(target.length())
-            self.body.acceleration = self.body.acceleration + target
+        danger.sort(key=lambda x: x.dist, reverse=False)
+        return manger, danger

@@ -2,34 +2,33 @@ from pygame import Vector2
 import random
 from fustrum import Fustrum
 import core
-import datetime
 
-from sma.jauge import Jauge
+from jauge import Jauge
 
 
 class Body:
-    def __init__(self):
+    def __init__(self, params):
         self.position = Vector2(random.uniform(0, core.WINDOW_SIZE[0]), random.uniform(0, core.WINDOW_SIZE[1]))
+
         self.velocity = Vector2(random.uniform(-10, 10), random.uniform(-10,10))
         self.acceleration = Vector2(random.uniform(-10, 10), random.uniform(-10,10))
-        self.maxAcc = 10
+        self.maxAcc = params[1]
         self.bodySize = 10
-        self.maxSpeed = 3
+        self.maxSpeed = params[0]
+        self.velocityMemory = self.velocity
+        self.jaugeFaim = Jauge(0,params[2],10,1)
+        self.jaugeFatigue = Jauge(0,params[3],10,1)
+        self.jaugeReproduction = Jauge(0,params[4],10,1)
+        self.dateNaissance = 0
+        self.esperanceDeVie = params[5]
 
-        self.jaugeFaim = Jauge(0,100,50)
-        self.jaugeFatigue = Jauge(0,100,50)
-        self.jaugeReproduction = Jauge(0,100,50)
-
-        self.dateNaissance = datetime.datetime.now()
-        self.esperanceDeVie = 100
-
-        self.fustrum = Fustrum(50, self)
-
+        self.fustrum = Fustrum(100, self)
+        self.params = params
         self.status = 'N'
 
 
     def move(self):
-        if self.acceleration.length() > self.maxAcc:
+        if self.acceleration.length() > self.maxAcc and self.maxAcc >0:
             self.acceleration.scale_to_length(self.maxAcc)
 
         self.velocity += self.acceleration
@@ -41,13 +40,22 @@ class Body:
 
     def update(self):
         self.updateValeurVie()
-        self.move()
+        if self.status == 'N':
+            self.move()
         self.edge()
 
     def updateValeurVie(self):
-        self.jaugeFatigue.valeur += 1
-        self.jaugeFaim.valeur += 1
-        self.jaugeReproduction.valeur += 1
+        if(self.status == 'N'):
+            self.jaugeFatigue.valeur += self.jaugeFatigue.step
+        else:
+            self.jaugeFatigue.valeur -= self.jaugeFatigue.step*3
+            if self.jaugeFatigue.valeur <= self.jaugeFatigue.min:
+                self.jaugeFatigue.valeur = self.jaugeFatigue.min
+                self.status = 'N'
+                self.velocity = self.velocityMemory
+
+        self.jaugeFaim.valeur += self.jaugeFaim.step
+        self.jaugeReproduction.valeur += self.jaugeReproduction.step
         self.dateNaissance += 1
 
         if (self.dateNaissance >= self.esperanceDeVie):
@@ -59,7 +67,6 @@ class Body:
         if(self.jaugeFatigue.valeur >= self.jaugeFatigue.max):
             self.velocity = Vector2(0, 0)
             self.status = 'D'
-
     def show(self):
         pass
 
@@ -86,3 +93,6 @@ class Body:
         self.velocity.y = self.velocity.y + random.randint(0,2) - random.randint(0,2)
         self.acceleration.y = self.acceleration.y + random.randint(0,2) - random.randint(0,2)
         self.position =Vector2(position.x,position.y)
+
+    def eat(self):
+        self.jaugeFaim.valeur = self.jaugeFaim.min
