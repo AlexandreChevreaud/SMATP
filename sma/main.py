@@ -42,7 +42,7 @@ def load(path):
         paramsHerbivore = randomValues(data['Herbivore']['parametres'])
         paramsSuperPredateur = randomValues(data['SuperPredateur']['parametres'])
         paramsDecomposeur= randomValues(data['Decomposeur']['parametres'])
-        core.duree = data['duréeSimu']
+        core.memory('duree', data['duréeSimu'])
 
         for i in range(0, core.memory("nbCarnivores")):
             core.memory("agents").append(Carnivore(BodyCarnivore(paramsCarnivore)))
@@ -90,7 +90,7 @@ def setup():
     print("Setup START---------")
     core.fps = 30
     core.WINDOW_SIZE = [800, 800]
-
+    core.memory("compteur",0)
     load("scenario.json")
 
     print("Setup END-----------")
@@ -144,35 +144,36 @@ def updateEnv():
                     a.body.eat()
 
 def run():
-    core.cleanScreen()
-    agents = core.memory("agents")
+    if(core.memory("compteur") < core.memory("duree")):
+        core.cleanScreen()
+        agents = core.memory("agents")
 
 
-    #Display
-    for agent in agents:
-        agent.show()
+        #Display
+        for agent in agents:
+            agent.show()
 
-    for item in core.memory("item"):
-        item.show()
+        for item in core.memory("item"):
+            item.show()
 
-    for agent in core.memory("agents"):
-        computePerception(agent)
+        for agent in core.memory("agents"):
+            computePerception(agent)
 
-    for agent in core.memory("agents"):
-        computeDecision(agent)
+        for agent in core.memory("agents"):
+            computeDecision(agent)
 
-    for agent in core.memory("agents"):
-        applyDecision(agent)
+        for agent in core.memory("agents"):
+            applyDecision(agent)
 
-    updateEnv()
-    if (printValeur == True):
-        # Compter le nombre d'agents ayant chaque statut
-        status_counts = Counter(agent.type for agent in agents)
-        print('-----------------------------------------------------------------')
-        for status, count in status_counts.items():
+        updateEnv()
+        if (printValeur == True):
+            # Compter le nombre d'agents ayant chaque statut
+            status_counts = Counter(agent.type for agent in agents)
+            print('-----------------------------------------------------------------')
+            for status, count in status_counts.items():
 
-            print("Il y a {} agents ayant un statut '{}' ce qui représente {}%".format(count, status,(count/len(agents))*100))
-        print('-----------------------------------------------------------------')
-
-    graphique()
+                print("Il y a {} agents ayant un statut '{}' ce qui représente {}%".format(count, status,(count/len(agents))*100))
+            print('-----------------------------------------------------------------')
+        graphique()
+        core.memory("compteur",core.memory("compteur")+1)
 core.main(setup, run)
