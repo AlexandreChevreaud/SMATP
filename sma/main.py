@@ -15,7 +15,7 @@ from herbivore import Herbivore
 from superpredateur import Superpredateur
 import json
 
-printValeur = False
+printValeur = True
 
 def randomValues(parametre):
     vitesse = random.randint(int(parametre['vitesseMax'][0]),int(parametre['vitesseMax'][1]))
@@ -124,12 +124,12 @@ def updateEnv():
                         if(a.body.status == 'N'):
                             core.memory("agents").remove(c)
                             a.body.eat()
-                    if (isinstance(a, Superpredateur) and (isinstance(c, Decomposeur) or isinstance(c,Herbivore) or isinstance(c,Carnivore))):
+                    if (isinstance(a, Superpredateur) and (isinstance(c, Decomposeur) or isinstance(c,Carnivore))):
                         if (a.body.status == 'N'):
                             core.memory("agents").remove(c)
                             a.body.eat()
                     if (isinstance(a, Decomposeur) and hasattr(c.body,"dateNaissance")):
-                        if(c.body.status is 'M'):
+                        if(c.body.status == 'M'):
                             core.memory("agents").remove(c)
                             a.body.eat()
                             vegetal = Vegetal()
@@ -173,6 +173,13 @@ def run():
             for status, count in status_counts.items():
 
                 print("Il y a {} agents ayant un statut '{}' ce qui représente {}%".format(count, status,(count/len(agents))*100))
+            bestGen = 0
+            bestAgent = None
+            for agent in agents:
+                if(agent.getValeurGenetique() > bestGen):
+                    bestGen = agent.getValeurGenetique()
+                    bestAgent = agent
+            print("L'agent avec les meilleurs caractéristique est un {}. Ses statistiques sont {} Max Speed, {} Max acc,{} Max faim,{} Max fatique,{} Max reprodution, {} esperance de vie".format(bestAgent.type, bestAgent.body.maxSpeed, bestAgent.body.maxAcc, bestAgent.body.jaugeFaim.max, bestAgent.body.jaugeFatigue.max, bestAgent.body.jaugeReproduction.max, bestAgent.body.esperanceDeVie))
             print('-----------------------------------------------------------------')
         graphique()
         core.memory("compteur",core.memory("compteur")+1)

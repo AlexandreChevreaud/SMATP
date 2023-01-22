@@ -22,7 +22,7 @@ class BodyHerbivore(Body):
     def update(self):
         super().update()
 
-        if(self.jaugeReproduction.valeur >= self.jaugeReproduction.max and self.status is not 'M' and self.status is not 'D'):
+        if(self.jaugeReproduction.valeur >= self.jaugeReproduction.max and self.status != 'M' and self.status != 'D'):
             self.jaugeReproduction.valeur = self.jaugeReproduction.min
             agent = Herbivore(BodyHerbivore(self.params))
             agent.body.modificationParametrageNaissance(self.position)

@@ -22,4 +22,4 @@ class Decomposeur(Agent):
 
         manger.sort(key=lambda x: x.dist, reverse=False)
         danger.sort(key=lambda x: x.dist, reverse=False)
-        return manger, danger
+        return manger, danger , []

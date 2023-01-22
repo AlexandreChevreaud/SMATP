@@ -11,7 +11,7 @@ class Superpredateur(Agent):
         self.type = "superpredateur"
 
     def filtrePerception(self):
-        manger  =[]
+        manger  = []
         for i in self.body.fustrum.perceptionList:
             i.dist = self.body.position.distance_to(i.position)
             if isinstance(i,BodyDecomposeur):
@@ -20,11 +20,8 @@ class Superpredateur(Agent):
             if isinstance(i, BodyCarnivore):
                 if (i.status == 'N'):
                     manger.append(i)
-            if isinstance(i, BodyHerbivore):
-                if (i.status == 'N'):
-                    manger.append(i)
 
 
         manger.sort(key=lambda x: x.dist, reverse=False)
 
-        return manger, []
+        return manger, [] , []

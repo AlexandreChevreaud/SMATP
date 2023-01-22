@@ -22,4 +22,4 @@ class Carnivore(Agent):
 
         manger.sort(key=lambda x: x.dist, reverse=False)
 
-        return manger, []
+        return manger, [] , []

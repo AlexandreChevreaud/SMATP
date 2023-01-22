@@ -8,12 +8,13 @@ class Agent(object):
         self.type = ""
         self.coefDanger = 100
         self.coefManger = 0.01
+        self.coefSymbiose = 0.01
 
     def show(self):
         self.body.show()
 
     def update(self):
-        targets,dangers = self.filtrePerception()
+        targets,dangers,symbiose = self.filtrePerception()
         if len(targets) > 0:
             target = targets[0].position - self.body.position
             if (target.length() != 0):
@@ -26,5 +27,14 @@ class Agent(object):
             target.scale_to_length(target.length() * (self.coefDanger + self.body.bodySize))
             self.body.acceleration = self.body.acceleration + target
 
+        if len(symbiose) > 0:
+            target = symbiose[0].position - self.body.position
+            if (target.length() != 0):
+                target.scale_to_length(target.length() * self.coefSymbiose)
+            self.body.acceleration = self.body.acceleration + target
+
     def filtrePerception(self):
-        return [], []
+        return [], [], []
+
+    def getValeurGenetique(self):
+        return (self.body.maxSpeed) * (self.body.maxAcc) * (self.body.jaugeFaim.max) * (self.body.jaugeFatigue.max) * (self.body.esperanceDeVie) * (self.body.jaugeReproduction.max)
